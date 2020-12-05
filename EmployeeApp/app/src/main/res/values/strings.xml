@@ -27,4 +27,7 @@
     <string name="hello_here_is_your_information">Profile Information</string>
     <string name="welcome">Welcome To Employee App</string>
     <string name="add_user">Add User</string>
+    <string name="employee_department">Employee Department</string>
+    <string name="employee_email">Employee Email</string>
+    <string name="employee_name">Employee Name</string>
 </resources>
