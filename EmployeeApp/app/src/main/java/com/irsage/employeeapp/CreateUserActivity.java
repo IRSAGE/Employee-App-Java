@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,9 +71,60 @@ public class CreateUserActivity extends AppCompatActivity {
                 pickImage();
             }
         });
+        saveEmployeeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //uploadImageToFirebase();
+                uploadEmployee();
+            }
+        });
     }
 
-
+//Uploading Employee
+private void uploadEmployee() {
+    String fullName = editTextFullName.getText().toString();
+    String email = editTextEmail.getText().toString();
+    String password = editTextPassword.getText().toString();
+    String department = editTextDepartment.getText().toString();
+    String district = editTextDistrict.getText().toString();
+    //String profile = profileUrl.toString();
+    if (fullName.isEmpty()) {
+        editTextFullName.setError("Full Name Is Required!");
+        editTextFullName.requestFocus();
+        return;
+    }
+    if (department.isEmpty()) {
+        editTextDepartment.setError("Department");
+        editTextDepartment.requestFocus();
+        return;
+    }
+    if (district.isEmpty()) {
+        editTextDistrict.setError("District is required!");
+        editTextDistrict.requestFocus();
+        return;
+    }
+    if (email.isEmpty()) {
+        editTextEmail.setError("Email Is Required!");
+        editTextEmail.requestFocus();
+        return;
+    }
+    if (password.isEmpty()) {
+        editTextPassword.setError("Password Is Required!");
+        editTextPassword.requestFocus();
+        return;
+    }
+    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        editTextEmail.setError("Enter a valid email address");
+        editTextEmail.requestFocus();
+        return;
+    }
+    if (password.length() < 6){
+        editTextPassword.setError(" Pass Word Should Be At least 6 Characters");
+        editTextPassword.requestFocus();
+        return;
+    }
+}
 
 
 
