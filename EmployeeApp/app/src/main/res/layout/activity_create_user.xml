@@ -1,9 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context=".CreateUserActivity">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/display_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/add_employees_information"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/employeeImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/display_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="2dp"
+        android:src="@drawable/add_photo"
+        android:contentDescription="@string/todo" />
+    <EditText
+        android:id="@+id/employeeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employeeImage"
+        android:layout_marginTop="10dp"
+        android:hint="@string/enter_employees_full_name"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp"
+        android:autofillHints="" />
+    <EditText
+        android:id="@+id/employeeEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employeeName"
+        android:layout_marginTop="10dp"
+        android:hint="@string/enter_employees_email_address"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:autofillHints="" />
+    <EditText
+        android:id="@+id/employeePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employeeEmail"
+        android:layout_marginTop="10dp"
+        android:hint="@string/enter_employees_password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:autofillHints="" />
+    <EditText
+        android:id="@+id/employeeDepartment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employeePassword"
+        android:layout_marginTop="10dp"
+        android:hint="@string/enter_employees_department"
+        android:inputType="text"
+        android:padding="10dp"
+        android:autofillHints="" />
+    <EditText
+        android:id="@+id/employeeDistrict"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employeeDepartment"
+        android:layout_marginTop="10dp"
+        android:hint="@string/enter_employees_district"
+        android:inputType="text"
+        android:padding="10dp"
+        android:autofillHints="" />
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/employeeDistrict"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/add_employee"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/button_color"
+        android:textStyle="bold"
+        />
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerInParent = "true"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+</RelativeLayout>
