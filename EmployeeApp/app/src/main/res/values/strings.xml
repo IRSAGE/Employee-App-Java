@@ -24,6 +24,6 @@
     <string name="add_employee">Add Employee</string>
     <string name="enter_employees_district">Enter Employees District</string>
     <string name="update_profile">Update Profile</string>
-    <string name="hello_here_is_your_information">Hello Here Is Your Information</string>
+    <string name="hello_here_is_your_information">Profile Information</string>
     <string name="welcome">Welcome To Employee App</string>
 </resources>
