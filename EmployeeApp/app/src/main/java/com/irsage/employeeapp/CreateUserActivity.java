@@ -25,14 +25,19 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.Random;
 
 public class CreateUserActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
@@ -66,7 +71,8 @@ public class CreateUserActivity extends AppCompatActivity {
         editTextDistrict = findViewById(R.id.employeeDistrict);
         saveEmployeeBtn = findViewById(R.id.addButton);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        cameraPermissions = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        cameraPermissions = new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions =new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
         employeeImg.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -79,11 +85,40 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //uploadImageToFirebase();
-                uploadEmployee();
+                uploadImageToFirebase();
+                //uploadEmployee();
             }
         });
     }
+
+
+
+    private void uploadImageToFirebase(){
+        Uri file = imageUri;
+        StorageReference riversRef =mStorageRef.child("images/" + new Random().nextInt(50));
+        final Uri[] profileUrl = new Uri[1];
+        riversRef.putFile(file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        profileUrl[0] = taskSnapshot.getUploadSessionUri();
+                        Toast.makeText(CreateUserActivity.this,
+                                "Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                        //return profileUrl;
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                        Toast.makeText(CreateUserActivity.this,
+                                "Storing Image denied!",Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
 //Uploading Employee
 private void uploadEmployee() {
@@ -149,11 +184,13 @@ private void uploadEmployee() {
                                                     "Employee registered successfully",
                                                     Toast.LENGTH_LONG).show();
                                             progressBar.setVisibility(View.GONE);
-                                            startActivity(new Intent( CreateUserActivity.this,AllUsersActivity.class));
+                                            startActivity(new Intent(
+                                                    CreateUserActivity.
+                                                            this,AllUsersActivity.class));
                                         }else {
                                             Toast.makeText(CreateUserActivity.this,
-                                                    "Something went wrong, " +
-                                                            "could not register the Employee Try Again !!",
+                                                    "Something went wrong, "
+                                                            + "could not register the Employee Try Again !!",
                                                     Toast.LENGTH_LONG).show();
                                         }
                                         progressBar.setVisibility(View.GONE);
@@ -169,9 +206,6 @@ private void uploadEmployee() {
             });
 
 }
-
-
-
 
     private void pickImage() {
         //Pick Profile Picture
@@ -207,7 +241,8 @@ private void uploadEmployee() {
 
     //check storage permission
     private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)==
+        boolean result = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)==
                 (PackageManager.PERMISSION_GRANTED);
         return  result;
     }
@@ -228,7 +263,8 @@ private void uploadEmployee() {
         ActivityCompat.requestPermissions(this,cameraPermissions,CAMERA_REQUEST_CODE);
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
             case CAMERA_REQUEST_CODE:{
@@ -239,7 +275,8 @@ private void uploadEmployee() {
                         pickFromCamera();
                     }
                     else{
-                        Toast.makeText(this, "Camera permission denied!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Camera permission denied!",
+                                Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -251,7 +288,8 @@ private void uploadEmployee() {
                         PickFromStorage();
                     }
                     else{
-                        Toast.makeText(this, "Storage permission denied!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Storage permission denied!",
+                                Toast.LENGTH_LONG).show();
                     }}
             }
         }
@@ -307,4 +345,5 @@ private void uploadEmployee() {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
         startActivityForResult(cameraIntent,IMAGE_PICK_CAMERA_CODE);
     }
+
 }
