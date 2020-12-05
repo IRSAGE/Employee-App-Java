@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "502479671145",
+    "firebase_url": "https://fire-base-authentication-b6efe-default-rtdb.firebaseio.com",
+    "project_id": "fire-base-authentication-b6efe",
+    "storage_bucket": "fire-base-authentication-b6efe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502479671145:android:97206b763d9d886f7a37f8",
+        "android_client_info": {
+          "package_name": "com.irsage.employeeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502479671145-n9gbn0tufmgef676887u1ebrftemrvp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS8jk84-HW7sLl5WQmN4sVpOLkMYfn5XY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502479671145-n9gbn0tufmgef676887u1ebrftemrvp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502479671145:android:f9afa4322d052f237a37f8",
+        "android_client_info": {
+          "package_name": "com.irsage.firebaseauthentication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502479671145-n9gbn0tufmgef676887u1ebrftemrvp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS8jk84-HW7sLl5WQmN4sVpOLkMYfn5XY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502479671145-n9gbn0tufmgef676887u1ebrftemrvp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
