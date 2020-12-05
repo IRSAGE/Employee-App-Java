@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                     .this, ProfileActivity.class));
                                         }else{
                                             startActivity(new Intent(MainActivity
-                                                    .this, CreateUserActivity.class));
+                                                    .this, AllUsersActivity.class));
                                         }
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(MainActivity.this,

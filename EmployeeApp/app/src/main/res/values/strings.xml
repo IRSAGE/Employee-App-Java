@@ -26,4 +26,5 @@
     <string name="update_profile">Update Profile</string>
     <string name="hello_here_is_your_information">Profile Information</string>
     <string name="welcome">Welcome To Employee App</string>
+    <string name="add_user">Add User</string>
 </resources>
