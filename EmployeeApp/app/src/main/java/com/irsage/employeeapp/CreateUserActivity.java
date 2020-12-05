@@ -24,7 +24,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -124,6 +128,46 @@ private void uploadEmployee() {
         editTextPassword.requestFocus();
         return;
     }
+    progressBar.setVisibility(View.VISIBLE);
+    mAuth.createUserWithEmailAndPassword(email,password)
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        User user = new User(fullName,email,password,department,district, false);
+                        FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser()
+                                        .getUid())
+                                .setValue(user)
+
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(CreateUserActivity.this,
+                                                    "Employee registered successfully",
+                                                    Toast.LENGTH_LONG).show();
+                                            progressBar.setVisibility(View.GONE);
+                                            startActivity(new Intent( CreateUserActivity.this,AllUsersActivity.class));
+                                        }else {
+                                            Toast.makeText(CreateUserActivity.this,
+                                                    "Something went wrong, " +
+                                                            "could not register the Employee Try Again !!",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                    }else{
+                        Toast.makeText(CreateUserActivity.this,
+                                "Something went wrong, could not register the Employee",
+                                Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+
 }
 
 

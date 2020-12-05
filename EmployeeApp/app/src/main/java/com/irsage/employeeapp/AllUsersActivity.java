@@ -58,8 +58,7 @@ public class AllUsersActivity extends AppCompatActivity {
                    User employee = dataSnapshot1.getValue(User.class);
                    list.add(employee);
                }
-               adapter = new EmployeeAdapter(AllUsersActivity.this,list);
-               recyclerView.setAdapter(adapter);
+                showStudentEmployee();
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -69,5 +68,16 @@ public class AllUsersActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showStudentEmployee();
+    }
+
+    private void showStudentEmployee() {
+        adapter = new EmployeeAdapter(AllUsersActivity.this,list);
+        recyclerView.setAdapter(adapter);
     }
 }

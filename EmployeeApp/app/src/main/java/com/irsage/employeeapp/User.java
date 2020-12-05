@@ -4,7 +4,7 @@ public class User {
     public String fullName, email, password, department, district;
     public boolean isAdmin;
 
-    public User(String fullName, String email, String password, String department, String district, String profileUrl, boolean isAdmin) {
+    public User(String fullName, String email, String password, String department, String district, boolean isAdmin) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
