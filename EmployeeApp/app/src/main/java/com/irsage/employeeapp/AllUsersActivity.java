@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -80,4 +83,25 @@ public class AllUsersActivity extends AppCompatActivity {
         adapter = new EmployeeAdapter(AllUsersActivity.this,list);
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        super.onContextItemSelected(item);
+        switch (item.getItemId()){
+            case 101:
+                adapter.deleteEmployee();
+                return true;
+            case 102:
+                updateEmployee();
+                return true;
+
+        }
+        return true;
+    }
+
+    private void updateEmployee() {
+
+    }
+
+
 }

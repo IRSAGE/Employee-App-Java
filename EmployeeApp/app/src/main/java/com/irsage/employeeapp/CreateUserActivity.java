@@ -85,8 +85,8 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                uploadImageToFirebase();
-                //uploadEmployee();
+                //uploadImageToFirebase();
+                uploadEmployee();
             }
         });
     }
