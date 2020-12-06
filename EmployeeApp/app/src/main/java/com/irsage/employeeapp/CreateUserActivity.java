@@ -85,8 +85,8 @@ public class CreateUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //uploadImageToFirebase();
-                uploadEmployee();
+                uploadImageToFirebase();
+                //uploadEmployee();
             }
         });
     }
@@ -96,16 +96,21 @@ public class CreateUserActivity extends AppCompatActivity {
     private void uploadImageToFirebase(){
         Uri file = imageUri;
         StorageReference riversRef =mStorageRef.child("images/" + new Random().nextInt(50));
-        final Uri[] profileUrl = new Uri[1];
+        progressBar.setVisibility(View.VISIBLE);
         riversRef.putFile(file)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
-                        profileUrl[0] = taskSnapshot.getUploadSessionUri();
-                        Toast.makeText(CreateUserActivity.this,
-                                "Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                        //return profileUrl;
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String image = uri.toString();
+                                Toast.makeText(CreateUserActivity.this, "Image Uploded Succesfull" , Toast.LENGTH_LONG).show();
+                                uploadEmployee(image);
+                            }
+                        });
+                        progressBar.setVisibility(View.GONE);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -121,7 +126,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
 
 //Uploading Employee
-private void uploadEmployee() {
+private void uploadEmployee(String profile) {
     String fullName = editTextFullName.getText().toString();
     String email = editTextEmail.getText().toString();
     String password = editTextPassword.getText().toString();
@@ -169,7 +174,7 @@ private void uploadEmployee() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        User user = new User(fullName,email,password,department,district, false);
+                        User user = new User(fullName,email,password,department,district, false,profile);
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser()
                                         .getUid())
@@ -192,14 +197,16 @@ private void uploadEmployee() {
                                                     "Something went wrong, "
                                                             + "could not register the Employee Try Again !!",
                                                     Toast.LENGTH_LONG).show();
+                                            progressBar.setVisibility(View.GONE);
                                         }
-                                        progressBar.setVisibility(View.GONE);
+
                                     }
                                 });
                     }else{
                         Toast.makeText(CreateUserActivity.this,
-                                "Something went wrong, could not register the Employee",
+                                "Error in Connecting",
                                 Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
                     }
 
                 }

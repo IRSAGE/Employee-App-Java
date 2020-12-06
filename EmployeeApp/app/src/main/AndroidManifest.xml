@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.irsage.employeeapp">
     <!-- camera permission -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- write external storage permission -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -12,7 +9,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.EmployeeApp">
-        <activity android:name=".AllUsersActivity"></activity>
+        <activity android:name=".UpdateEmployeeActivity"></activity>
+        <activity android:name=".AllUsersActivity" />
         <activity android:name=".CreateUserActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MainActivity">
@@ -25,6 +23,9 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-    </application>
+    </application> <!-- write external storage permission -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

@@ -79,7 +79,7 @@ public class AllUsersActivity extends AppCompatActivity {
         showStudentEmployee();
     }
 
-    private void showStudentEmployee() {
+    public  void showStudentEmployee() {
         adapter = new EmployeeAdapter(AllUsersActivity.this,list);
         recyclerView.setAdapter(adapter);
     }
@@ -92,15 +92,11 @@ public class AllUsersActivity extends AppCompatActivity {
                 adapter.deleteEmployee();
                 return true;
             case 102:
-                updateEmployee();
+                adapter.updateEmployee();
                 return true;
 
         }
         return true;
-    }
-
-    private void updateEmployee() {
-
     }
 
 

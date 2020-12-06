@@ -1,16 +1,16 @@
 package com.irsage.employeeapp;
 
 public class User {
-    public String fullName, email, password, department, district;
+    public String fullName, email, password, department, district,profileUrl;
     public boolean isAdmin;
 
-    public User(String fullName, String email, String password, String department, String district, boolean isAdmin) {
+    public User(String fullName, String email, String password, String department, String district, boolean isAdmin,String profileUrl) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.department = department;
         this.district = district;
-        //this.profileUrl = profileUrl;
+        this.profileUrl = profileUrl;
         this.isAdmin = isAdmin;
     }
 
@@ -34,9 +34,9 @@ public class User {
         return district;
     }
 
-    //public String getProfileUrl() {
-       // return profileUrl;
-    //}
+    public String getProfileUrl() {
+       return profileUrl;
+    }
 
     public boolean isAdmin() {
         return isAdmin;

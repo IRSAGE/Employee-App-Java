@@ -3,6 +3,7 @@ package com.irsage.employeeapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +23,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.ReferenceQueue;
 import java.util.ArrayList;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     Context context;
     ArrayList<User> profiles = null;
     String employeeEmail;
+    String profileUrlToDelete;
     FirebaseDatabase mFirebaseDatabase ;
     DatabaseReference mRef;
     public EmployeeAdapter (Context c , ArrayList<User>p){
@@ -46,12 +52,13 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     public void onBindViewHolder(@NonNull EmployeeViewHolder holder, int position) {
         User employeeData = profiles.get(position);
          employeeEmail = employeeData.getEmail();
-        //mFirebaseDatabase = FirebaseDatabase.getInstance();
-        //mRef = mFirebaseDatabase.getReference("Users");
+         profileUrlToDelete = employeeData.getProfileUrl();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference("Users");
         holder.fName.setText(profiles.get(position).getFullName());
         holder.empDepartment.setText(profiles.get(position).getDepartment());
         holder.empEmail.setText(profiles.get(position).getEmail());
-        //Picasso.get().load(profiles.get(position).getProfilePic()).into(holder.profilePic);
+        Picasso.get().load(profiles.get(position).getProfileUrl()).into(holder.profilePic);
     }
 
 
@@ -96,8 +103,24 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             public void onClick(DialogInterface dialog, int which) {
 
                 //DatabaseReference employeeRef = FirebaseDatabase.getInstance().getReference("Users").child(employeeEmail);
+                 Query mQuery = mRef.orderByChild("email").equalTo(employeeEmail);
+                 mQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                     @Override
+                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                         for (DataSnapshot ds: snapshot.getChildren()){
+                             ds.getRef().removeValue();
+                             Toast.makeText(context, "Employee Deleted SuccessFull"  , Toast.LENGTH_LONG).show();
+                             //AllUsersActivity.showStudentEmployee();
+                         }
+                     }
 
-                Toast.makeText(context, "Employee Deleted SuccessFull"  , Toast.LENGTH_LONG).show();
+                     @Override
+                     public void onCancelled(@NonNull DatabaseError error) {
+                         Toast.makeText(context, error.getDetails()  , Toast.LENGTH_LONG).show();
+                     }
+                 });
+                 //Deleting Related Image
+                //StorageReference mPictureRefe = getI
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -107,6 +130,14 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             }
         });
         builder.create().show();
+    }
+
+
+
+    public  void  updateEmployee(){
+        Intent intent=new Intent(context,UpdateEmployeeActivity.class);
+        intent.putExtra("editMode",false);
+        context.startActivity(intent);
     }
 
 }
