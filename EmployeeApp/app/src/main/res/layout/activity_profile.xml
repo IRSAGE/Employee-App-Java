@@ -77,26 +77,13 @@
         android:textStyle="bold"
         android:autofillHints="" />
 
-    <Button
-        android:id="@+id/updateProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/employeeDistrict"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/button_color"
-        android:text="@string/update_profile"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
 
     <Button
         android:id="@+id/signOut"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/updateProfile"
-        android:layout_alignStart="@+id/updateProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="-49dp"
+        android:layout_below="@id/employeeDistrict"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/button_color"
         android:text="@string/logout"
         android:textColor="@color/black"

@@ -8,6 +8,7 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.ContextMenu;
@@ -35,6 +36,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     Context context;
     ArrayList<User> profiles = null;
     String employeeEmail;
+    String empFullName,empPassword,empDepartment,empDistrict;
     String profileUrlToDelete;
     FirebaseDatabase mFirebaseDatabase ;
     DatabaseReference mRef;
@@ -53,8 +55,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         User employeeData = profiles.get(position);
          employeeEmail = employeeData.getEmail();
          profileUrlToDelete = employeeData.getProfileUrl();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabase.getReference("Users");
+         empFullName = employeeData.getFullName();
+         empDepartment= employeeData.getDepartment();
+         empDistrict = employeeData.getDistrict();
+         empPassword= employeeData.getPassword();
+         mFirebaseDatabase = FirebaseDatabase.getInstance();
+         mRef = mFirebaseDatabase.getReference("Users");
         holder.fName.setText(profiles.get(position).getFullName());
         holder.empDepartment.setText(profiles.get(position).getDepartment());
         holder.empEmail.setText(profiles.get(position).getEmail());
@@ -109,7 +115,8 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
                      public void onDataChange(@NonNull DataSnapshot snapshot) {
                          for (DataSnapshot ds: snapshot.getChildren()){
                              ds.getRef().removeValue();
-                             Toast.makeText(context, "Employee Deleted SuccessFull"  , Toast.LENGTH_LONG).show();
+                             Toast.makeText(context, "Employee Deleted SuccessFull"  ,
+                                     Toast.LENGTH_LONG).show();
                              //AllUsersActivity.showStudentEmployee();
                          }
                      }
@@ -135,9 +142,15 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
 
     public  void  updateEmployee(){
-        Intent intent=new Intent(context,UpdateEmployeeActivity.class);
-        intent.putExtra("editMode",false);
-        context.startActivity(intent);
+                Intent intent = new Intent(context,UpdateEmployeeActivity.class);
+                intent.putExtra("FullName", empFullName);
+                intent.putExtra("Email", employeeEmail);
+                intent.putExtra("Password",empPassword);
+                intent.putExtra("Department",empDepartment);
+                intent.putExtra("District",empDistrict);
+                intent.putExtra("Profile", profileUrlToDelete);
+                intent.putExtra("editMode", true);
+                context.startActivity(intent);
     }
 
 }

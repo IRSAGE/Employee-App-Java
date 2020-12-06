@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends AppCompatActivity {
     private Button logout;
@@ -50,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         final TextView emailT = (TextView)findViewById(R.id.employeeEmail);
         final TextView passwordT = (TextView)findViewById(R.id.employeePassword);
         final TextView districtT = (TextView)findViewById(R.id.employeeDistrict);
+        final ImageView profileImg = (ImageView)findViewById(R.id.employeeImage);
         reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -60,11 +63,13 @@ public class ProfileActivity extends AppCompatActivity {
                     String department = userProfile.department;
                     String password = userProfile.password;
                     String district = userProfile.district;
+                    String profile = userProfile.profileUrl;
                     departmentT.setText("Your Department: "+ department);
                     fullNameT.setText("Full Names: "+ fullName);
                     emailT.setText("Your Email: "+ email);
                     passwordT.setText("Your Password: "+ password);
                     districtT.setText("your location: "+ district);
+                    Picasso.get().load(profile).into(profileImg);
                 }
                 progressBar.setVisibility(View.GONE);
             }

@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -61,7 +62,8 @@ public class AllUsersActivity extends AppCompatActivity {
                    User employee = dataSnapshot1.getValue(User.class);
                    list.add(employee);
                }
-                showStudentEmployee();
+                adapter = new EmployeeAdapter(AllUsersActivity.this,list);
+                recyclerView.setAdapter(adapter);
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -97,6 +99,13 @@ public class AllUsersActivity extends AppCompatActivity {
 
         }
         return true;
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode== event.KEYCODE_BACK){
+            moveTaskToBack(true);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
